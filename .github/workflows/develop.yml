@@ -1,0 +1,22 @@
+name: "DEV DEPLOY"
+
+on:
+    push:
+        branches:
+            - develop
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+    terraform:
+        uses: ./.github/workflows/terraform.yml
+        with:
+            environment: dev
+            aws-assume-role-arn: "arn:aws:iam::920372987837:role/github-actions-limadeveloper-pipeline"
+            aws-region: "us-east-1"
+            aws-statefile-s3-bucket: "lima-developer-us-east-1-terraform-statefile"
+            aws-lock-dynamodb-table: "lima-developer-us-east-1-terraform-lock"
+
+
